@@ -9,21 +9,21 @@ namespace GrowthCurves
             double urban = 0.50;
             int returnPeriod = 2;
             int region = 10;
-            int[] dob = new int[] { 1, 2, 5, 20, 25, 30, 50, 100, 250, 500, 1000};
+            int[] dob = new int[] { 1, 2, 5, 20, 25, 30, 50, 100, 250, 500, 1000 };
             foreach (int item in dob)
             {
-            Console.WriteLine("return period" + (item.ToString()));
-            for (int i = 1; i < 12; i += 1)
-            {
-                //Console.WriteLine(i);
-                //Under 50 is FUCKED BIG TIME!!! LINEAR INTER FUUUCKED!!!
-                Console.WriteLine(i.ToString() + "\t" + QFInalForTheEntireUK(138.3, 287.4, i, item, 0.5).ToString());
-                //Console.WriteLine(i.ToString() + "\t" + QUnifiedForGB(5.75, 11.07, 9, i, 0.48).ToString());
-                //Console.WriteLine("next plz");
-            }
+                Console.WriteLine("return period" + (item.ToString()));
+                for (int i = 1; i < 12; i += 1)
+                {
+                    //Console.WriteLine(i);
+                    //Under 50 is FUCKED BIG TIME!!! LINEAR INTER FUUUCKED!!!
+                    Console.WriteLine(i.ToString() + "\t" + QFInalForTheEntireUK(138.3, 287.4, i, item, 0.5).ToString());
+                    //Console.WriteLine(i.ToString() + "\t" + QUnifiedForGB(5.75, 11.07, 9, i, 0.48).ToString());
+                    //Console.WriteLine("next plz");
+                }
             }
             //Console.WriteLine(GofTUrbanToRuralUnderFIfty(9,50,0.48));
-            Console.WriteLine(KFactorUnderFifty(5.75,11.07,9, 50, 0.48));
+            Console.WriteLine(KFactorUnderFifty(5.75, 11.07, 9, 50, 0.48));
             Console.WriteLine(GrowthCurveUnderFiftyVariateY(0.48, returnPeriod));
             ////Console.WriteLine(GrowthCUrveUnderFiftyYear(region, returnPeriod, urban));
             ////Console.WriteLine(GrowthOverHundred(10,100));
@@ -50,7 +50,7 @@ namespace GrowthCurves
             }
         }
         public static double Irish(double qbarUrban, int returnPeriod)
-            
+
         {
             double year = Convert.ToDouble(returnPeriod);
             if (year == 1)
@@ -58,7 +58,7 @@ namespace GrowthCurves
                 double xi = 0.83;
                 return xi * qbarUrban;
             }
-            else if (year>1 && year < 501)
+            else if (year > 1 && year < 501)
             {
                 double y = -Math.Log(-Math.Log(1 - 1 / year));
                 double power = 0.05 * y;
@@ -80,7 +80,7 @@ namespace GrowthCurves
             {
                 return QaboveHundread(qbarRural, qbarUrban, region, returnPeriod, urban);
             }
-            else if(returnPeriod > 50 && returnPeriod < 100)
+            else if (returnPeriod > 50 && returnPeriod < 100)
             {
                 double year = Convert.ToDouble(returnPeriod);
                 return Linearinterpolation(year, 50, 100, QbelowFifty(qbarRural, qbarUrban, region, 50, urban), QaboveHundread(qbarRural, qbarUrban, region, 100, urban));
@@ -105,14 +105,14 @@ namespace GrowthCurves
             //step 19
             double gOfT = GofTUrbanToRuralOverFIfty(qbarRural, qbarUrban, region, returnPeriod, urban);
             double ruralGrowthFactor = GrowthOverHundred(region, returnPeriod);
-            return gOfT* ruralGrowthFactor;
+            return gOfT * ruralGrowthFactor;
         }
         public static double GofTUrbanToRuralOverFIfty(double qbarRural, double qbarUrban, int region, int returnPeriod, double urban)
         {
             double rmaf = RMAF(qbarRural, qbarUrban);
             double K = KFactorUnderFifty(qbarRural, qbarUrban, region, 50, urban);
-            double underExp = -K*(Math.Log(100.00) - 1.8);
-            return rmaf + (1 - rmaf)*Math.Exp(underExp);
+            double underExp = -K * (Math.Log(100.00) - 1.8);
+            return rmaf + (1 - rmaf) * Math.Exp(underExp);
         }
         public static double GofTUrbanToRuralUnderFIfty(int region, int returnPeriod, double urban)
         {
@@ -125,12 +125,12 @@ namespace GrowthCurves
             double rmaf = RMAF(qbarRural, qbarUrban);
             double gt = GofTUrbanToRuralUnderFIfty(region, returnPeriod, urban);
             double underLog = ((1 - rmaf) / (gt - rmaf));
-            return 0.48*Math.Log(underLog);
+            return 0.48 * Math.Log(underLog);
         }
         public static double RMAF(double qbarRural, double qbarUrban)
         {
 
-            return qbarRural/qbarUrban;
+            return qbarRural / qbarUrban;
         }
         public static double QUnderFifty(double qbarUrban, int region, int returnPeriod, double urban)
         {
@@ -140,15 +140,15 @@ namespace GrowthCurves
         {
             if (region == 1)
             {
-                return +-4.61055284585535e-18 * Math.Pow(returnPeriodOverHundre, 6) + 1.999165105050586e-14 * Math.Pow(returnPeriodOverHundre, 5) +-3.7339206545134484e-11 * Math.Pow(returnPeriodOverHundre, 4) +3.7559228179260725e-08 * Math.Pow(returnPeriodOverHundre, 3) +-2.148858974360152e-05 * Math.Pow(returnPeriodOverHundre, 2) +0.007618449578745731 * Math.Pow(returnPeriodOverHundre, 1) +1.899020326079027 * Math.Pow(returnPeriodOverHundre, 0);
+                return +-4.61055284585535e-18 * Math.Pow(returnPeriodOverHundre, 6) + 1.999165105050586e-14 * Math.Pow(returnPeriodOverHundre, 5) + -3.7339206545134484e-11 * Math.Pow(returnPeriodOverHundre, 4) + 3.7559228179260725e-08 * Math.Pow(returnPeriodOverHundre, 3) + -2.148858974360152e-05 * Math.Pow(returnPeriodOverHundre, 2) + 0.007618449578745731 * Math.Pow(returnPeriodOverHundre, 1) + 1.899020326079027 * Math.Pow(returnPeriodOverHundre, 0);
             }
             else if (region == 2)
             {
-                return +-1.2057397854513545e-17 * Math.Pow(returnPeriodOverHundre, 6) +4.1357709559806624e-14 * Math.Pow(returnPeriodOverHundre, 5) + -5.882618766001835e-11 * Math.Pow(returnPeriodOverHundre, 4) + 4.6695335236202165e-08 * Math.Pow(returnPeriodOverHundre, 3) + -2.3336168046875465e-05 * Math.Pow(returnPeriodOverHundre, 2) + 0.007993957023441967 * Math.Pow(returnPeriodOverHundre, 1) + 2.022751741956595 * Math.Pow(returnPeriodOverHundre, 0);
+                return +-1.2057397854513545e-17 * Math.Pow(returnPeriodOverHundre, 6) + 4.1357709559806624e-14 * Math.Pow(returnPeriodOverHundre, 5) + -5.882618766001835e-11 * Math.Pow(returnPeriodOverHundre, 4) + 4.6695335236202165e-08 * Math.Pow(returnPeriodOverHundre, 3) + -2.3336168046875465e-05 * Math.Pow(returnPeriodOverHundre, 2) + 0.007993957023441967 * Math.Pow(returnPeriodOverHundre, 1) + 2.022751741956595 * Math.Pow(returnPeriodOverHundre, 0);
             }
             else if (region == 3)
             {
-                return +-1.393908923322141e-17 * Math.Pow(returnPeriodOverHundre, 6) +5.120660603018954e-14 * Math.Pow(returnPeriodOverHundre, 5) +-7.618802657045816e-11 * Math.Pow(returnPeriodOverHundre, 4) +5.952595700601307e-08 * Math.Pow(returnPeriodOverHundre, 3) +-2.674511396013423e-05 * Math.Pow(returnPeriodOverHundre, 2) +0.007649578743699909 * Math.Pow(returnPeriodOverHundre, 1) +1.5300879839112833 * Math.Pow(returnPeriodOverHundre, 0);
+                return +-1.393908923322141e-17 * Math.Pow(returnPeriodOverHundre, 6) + 5.120660603018954e-14 * Math.Pow(returnPeriodOverHundre, 5) + -7.618802657045816e-11 * Math.Pow(returnPeriodOverHundre, 4) + 5.952595700601307e-08 * Math.Pow(returnPeriodOverHundre, 3) + -2.674511396013423e-05 * Math.Pow(returnPeriodOverHundre, 2) + 0.007649578743699909 * Math.Pow(returnPeriodOverHundre, 1) + 1.5300879839112833 * Math.Pow(returnPeriodOverHundre, 0);
             }
             else if (region == 4)
             {
@@ -156,11 +156,11 @@ namespace GrowthCurves
             }
             else if (region == 5)
             {
-                return +-1.869006810186129e-17 * Math.Pow(returnPeriodOverHundre, 6) +7.649898685203432e-14 * Math.Pow(returnPeriodOverHundre, 5) +-1.2878077151622047e-10 * Math.Pow(returnPeriodOverHundre, 4) +1.132794379695484e-07 * Math.Pow(returnPeriodOverHundre, 3) +-5.566047008550996e-05 * Math.Pow(returnPeriodOverHundre, 2) +0.016774919824191388 * Math.Pow(returnPeriodOverHundre, 1) +2.337965057817572 * Math.Pow(returnPeriodOverHundre, 0);
+                return +-1.869006810186129e-17 * Math.Pow(returnPeriodOverHundre, 6) + 7.649898685203432e-14 * Math.Pow(returnPeriodOverHundre, 5) + -1.2878077151622047e-10 * Math.Pow(returnPeriodOverHundre, 4) + 1.132794379695484e-07 * Math.Pow(returnPeriodOverHundre, 3) + -5.566047008550996e-05 * Math.Pow(returnPeriodOverHundre, 2) + 0.016774919824191388 * Math.Pow(returnPeriodOverHundre, 1) + 2.337965057817572 * Math.Pow(returnPeriodOverHundre, 0);
             }
             else if (region == 6)
             {
-                return +-1.4271131918210215e-17 * Math.Pow(returnPeriodOverHundre, 6) +5.878848820032566e-14 * Math.Pow(returnPeriodOverHundre, 5) +-1.0062179106307371e-10 * Math.Pow(returnPeriodOverHundre, 4) +9.0771497021573e-08 * Math.Pow(returnPeriodOverHundre, 3) +-4.6027279202306814e-05 * Math.Pow(returnPeriodOverHundre, 2) +0.014390252334815978 * Math.Pow(returnPeriodOverHundre, 1) +2.1299646268760943 * Math.Pow(returnPeriodOverHundre, 0);
+                return +-1.4271131918210215e-17 * Math.Pow(returnPeriodOverHundre, 6) + 5.878848820032566e-14 * Math.Pow(returnPeriodOverHundre, 5) + -1.0062179106307371e-10 * Math.Pow(returnPeriodOverHundre, 4) + 9.0771497021573e-08 * Math.Pow(returnPeriodOverHundre, 3) + -4.6027279202306814e-05 * Math.Pow(returnPeriodOverHundre, 2) + 0.014390252334815978 * Math.Pow(returnPeriodOverHundre, 1) + 2.1299646268760943 * Math.Pow(returnPeriodOverHundre, 0);
             }
             else if (region == 7)
             {
@@ -176,14 +176,14 @@ namespace GrowthCurves
             }
             else if (region == 10)
             {
-                return +-1.393908923322141e-17 * Math.Pow(returnPeriodOverHundre, 6) +5.120660603018954e-14 * Math.Pow(returnPeriodOverHundre, 5) +-7.618802657045816e-11 * Math.Pow(returnPeriodOverHundre, 4) +5.952595700601307e-08 * Math.Pow(returnPeriodOverHundre, 3) +-2.674511396013423e-05 * Math.Pow(returnPeriodOverHundre, 2) +0.007649578743699909 * Math.Pow(returnPeriodOverHundre, 1) +1.5300879839112833 * Math.Pow(returnPeriodOverHundre, 0);
+                return +-1.393908923322141e-17 * Math.Pow(returnPeriodOverHundre, 6) + 5.120660603018954e-14 * Math.Pow(returnPeriodOverHundre, 5) + -7.618802657045816e-11 * Math.Pow(returnPeriodOverHundre, 4) + 5.952595700601307e-08 * Math.Pow(returnPeriodOverHundre, 3) + -2.674511396013423e-05 * Math.Pow(returnPeriodOverHundre, 2) + 0.007649578743699909 * Math.Pow(returnPeriodOverHundre, 1) + 1.5300879839112833 * Math.Pow(returnPeriodOverHundre, 0);
             }
             else
                 return 0;
         }
         public static double GrowthCUrveUnderFiftyYear(int region, int returnPeriodYear, double urban)
         {
-            double variateY = GrowthCurveUnderFiftyVariateY(urban,returnPeriodYear);
+            double variateY = GrowthCurveUnderFiftyVariateY(urban, returnPeriodYear);
             if (region == 1)
             {
                 return +-0.0018370370370373013 * Math.Pow(variateY, 6) + 0.02214700854701162 * Math.Pow(variateY, 5) + -0.10088319088320485 * Math.Pow(variateY, 4) + 0.21694094794097898 * Math.Pow(variateY, 3) + -0.1894895622895969 * Math.Pow(variateY, 2) + 0.2924365190365378 * Math.Pow(variateY, 1) + 0.8199564879564841 * Math.Pow(variateY, 0);
@@ -232,83 +232,37 @@ namespace GrowthCurves
         }
         public static double GrowthCurveUnderFiftyVariateY(double urbanRatio, int returnPerdiod)
         {
-
+            if (returnPerdiod == 1)
+            {
+                return 0;
+            }
             if (urbanRatio == 0.00)
             {
-                if (returnPerdiod == 1)
-                {
-                    return 0;
-                }
-                else
-                {
-                    return Math.Round(ZeroResult(returnPerdiod), 2);
-                }
+                return Math.Round(ZeroResult(returnPerdiod), 2);
             }
             else if (urbanRatio == 0.25)
             {
-                if (returnPerdiod == 1)
-                {
-                    return 0;
-                }
-                else
-                {
-                    return Math.Round(QuarterResult(returnPerdiod), 2);
-                }
+                return Math.Round(QuarterResult(returnPerdiod), 2);
             }
             else if (urbanRatio == 0.50)
             {
-                if (returnPerdiod == 1)
-                {
-                    return 0;
-                }
-                else
-                {
-                    return Math.Round(HalfResult(returnPerdiod), 2);
-                }
+                return Math.Round(HalfResult(returnPerdiod), 2);
             }
             else if (urbanRatio == 0.75)
             {
-                if (returnPerdiod == 1)
-                {
-                    return 0;
-                }
-                else
-                {
-                    return Math.Round(ThreequartersResult(returnPerdiod), 2);
-                }
+                return Math.Round(ThreequartersResult(returnPerdiod), 2);
             }
             else if (0.00 < urbanRatio && urbanRatio < 0.25)
             {
-                if (returnPerdiod == 1)
-                {
-                    return 0;
-                }
-                else
-                {
-                    return Math.Round(ZeroResult(returnPerdiod) + urbanRatio / 0.25 * (-ZeroResult(returnPerdiod) + QuarterResult(returnPerdiod)), 2);
-                }
+                return Math.Round(ZeroResult(returnPerdiod) + urbanRatio / 0.25 * (-ZeroResult(returnPerdiod) + QuarterResult(returnPerdiod)), 2);
             }
             else if (0.25 < urbanRatio && urbanRatio < 0.5)
             {
-                if (returnPerdiod == 1)
-                {
-                    return 0;
-                }
-                else
-                {
-                    return Math.Round(QuarterResult(returnPerdiod) + (urbanRatio - 0.25) / 0.25 * ((-QuarterResult(returnPerdiod) + HalfResult(returnPerdiod))), 2);
-                }
+                return Math.Round(QuarterResult(returnPerdiod) + (urbanRatio - 0.25) / 0.25 * ((-QuarterResult(returnPerdiod) + HalfResult(returnPerdiod))), 2);
             }
             else if (0.5 < urbanRatio && urbanRatio < 0.75)
             {
-                if (returnPerdiod == 1)
-                {
-                    return 0;
-                }
-                else
-                {
-                    return Math.Round(HalfResult(returnPerdiod) + (urbanRatio - 0.5) / 0.25 * ((-HalfResult(returnPerdiod) + ThreequartersResult(returnPerdiod))), 2);
-                }
+                return Math.Round(HalfResult(returnPerdiod) + (urbanRatio - 0.5) / 0.25 * ((-HalfResult(returnPerdiod) + ThreequartersResult(returnPerdiod))), 2);
             }
             else
             {
@@ -323,8 +277,8 @@ namespace GrowthCurves
                     result = 0.028 * x + 2.5;
                 }
                 else
-                { 
-                result = 9.399825550184075e-07 * Math.Pow(x, 5) + -0.0001066203032742477 * Math.Pow(x, 4) + 0.0043380929616195045 * Math.Pow(x, 3) + -0.08195265029519803 * Math.Pow(x, 2) + 0.8018243927802975 * Math.Pow(x, 1) + -0.9388670826620519 * Math.Pow(x, 0);
+                {
+                    result = 9.399825550184075e-07 * Math.Pow(x, 5) + -0.0001066203032742477 * Math.Pow(x, 4) + 0.0043380929616195045 * Math.Pow(x, 3) + -0.08195265029519803 * Math.Pow(x, 2) + 0.8018243927802975 * Math.Pow(x, 1) + -0.9388670826620519 * Math.Pow(x, 0);
                 }
                 return result;
             }
@@ -341,7 +295,7 @@ namespace GrowthCurves
                 {
                     result = 8.667538915723792e-07 * Math.Pow(x, 5) - 9.86984836285179e-05 * Math.Pow(x, 4) + 0.004036701858560034 * Math.Pow(x, 3) - 0.07665008185719663 * Math.Pow(x, 2) + 0.7415947027642078 * Math.Pow(x, 1) - 0.687331253354478 * Math.Pow(x, 0);
                 }
-                 return result;
+                return result;
             }
             double HalfResult(int z)
             {
@@ -351,12 +305,12 @@ namespace GrowthCurves
                 {
                     result = 0.0132 * x + 2.34;
 
-                 }
+                }
                 else
                 {
                     result = 9.519524959738484e-07 * Math.Pow(x, 5) + -0.00010732218196453143 * Math.Pow(x, 4) + 0.004318443739934022 * Math.Pow(x, 3) + -0.07974936795488624 * Math.Pow(x, 2) + 0.7272978764088518 * Math.Pow(x, 1) + -0.5184591384859801 * Math.Pow(x, 0);
                 }
-                    return result;
+                return result;
             }
             double ThreequartersResult(int z)
             {
@@ -371,15 +325,15 @@ namespace GrowthCurves
                 {
                     result = 1.038962694578209e-06 * Math.Pow(x, 5) + -0.00011621922973693708 * Math.Pow(x, 4) + 0.004612284051259677 * Math.Pow(x, 3) + -0.08300135131505533 * Math.Pow(x, 2) + 0.7136517143046996 * Math.Pow(x, 1) + -0.35037003488958696 * Math.Pow(x, 0);
                 }
-                    return result;
+                return result;
             }
             //[ 8.66753892e-07 - 9.86984836e-05  4.03670186e-03 - 7.66500819e-02  7.41594703e-01 - 6.87331253e-01]
-        
+
         }
         public static double Linearinterpolation(double ourValueX, double x1, double x2, double y1, double y2)
         {
-            double dist = (ourValueX-x1)/(x2-x1);
-            return y1+(y2-y1)*dist;
+            double dist = (ourValueX - x1) / (x2 - x1);
+            return y1 + (y2 - y1) * dist;
         }
     }
 }
