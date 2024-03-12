@@ -16,7 +16,6 @@ namespace GrowthCurves
                 for (int i = 1; i < 12; i += 1)
                 {
                     //Console.WriteLine(i);
-                    //Under 50 is FUCKED BIG TIME!!! LINEAR INTER FUUUCKED!!!
                     Console.WriteLine(i.ToString() + "\t" + QFInalForTheEntireUK(138.3, 287.4, i, item, 0.5).ToString());
                     //Console.WriteLine(i.ToString() + "\t" + QUnifiedForGB(5.75, 11.07, 9, i, 0.48).ToString());
                     //Console.WriteLine("next plz");
